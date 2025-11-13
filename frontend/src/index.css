@@ -1,0 +1,170 @@
+/**
+ * Global Styles for VastraVerse
+ * TailwindCSS base styles with custom Indian-inspired design
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-gray-200;
+  }
+  
+  body {
+    @apply bg-gradient-to-br from-orange-50 to-blue-50 font-english text-gray-900;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  /* Button Styles */
+  .btn-primary {
+    @apply bg-gradient-to-r from-saffron-500 to-saffron-600 hover:from-saffron-600 hover:to-saffron-700 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-to-r from-deepBlue-600 to-deepBlue-700 hover:from-deepBlue-700 hover:to-deepBlue-800 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .btn-outline {
+    @apply border-2 border-saffron-500 text-saffron-600 hover:bg-saffron-500 hover:text-white font-medium px-6 py-3 rounded-lg transition-all duration-300;
+  }
+  
+  .btn-ghost {
+    @apply text-gray-600 hover:text-saffron-600 hover:bg-saffron-50 font-medium px-4 py-2 rounded-lg transition-all duration-300;
+  }
+
+  /* Card Styles */
+  .card {
+    @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105;
+  }
+  
+  .card-product {
+    @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden;
+  }
+
+  /* Input Styles */
+  .input-field {
+    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-300 bg-white;
+  }
+  
+  .input-error {
+    @apply border-red-500 focus:ring-red-500 focus:border-red-500;
+  }
+
+  /* Navigation Styles */
+  .nav-link {
+    @apply text-gray-700 hover:text-saffron-600 font-medium transition-colors duration-300 relative;
+  }
+  
+  .nav-link::after {
+    content: '';
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-saffron-500 transition-all duration-300;
+  }
+  
+  .nav-link:hover::after {
+    @apply w-full;
+  }
+  
+  .nav-link.active {
+    @apply text-saffron-600;
+  }
+  
+  .nav-link.active::after {
+    @apply w-full;
+  }
+
+  /* Hero Section */
+  .hero-gradient {
+    @apply bg-gradient-to-br from-saffron-500 via-gold-500 to-deepBlue-600;
+  }
+  
+  .hero-text {
+    @apply bg-gradient-to-r from-white to-orange-50 bg-clip-text text-transparent;
+  }
+
+  /* Category Cards */
+  .category-card {
+    @apply relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 cursor-pointer;
+  }
+  
+  .category-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent;
+  }
+
+  /* Product Grid */
+  .product-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
+  }
+
+  /* Loading Animation */
+  .loading-spinner {
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-saffron-500;
+  }
+
+  /* Badge Styles */
+  .badge {
+    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  
+  .badge-success {
+    @apply bg-green-100 text-green-800;
+  }
+  
+  .badge-warning {
+    @apply bg-yellow-100 text-yellow-800;
+  }
+  
+  .badge-error {
+    @apply bg-red-100 text-red-800;
+  }
+  
+  .badge-info {
+    @apply bg-blue-100 text-blue-800;
+  }
+
+  /* Scrollbar Styles */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-track {
+    @apply bg-gray-100 rounded-full;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-saffron-400 rounded-full hover:bg-saffron-500;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 200ms;
+  }
+  
+  .animation-delay-400 {
+    animation-delay: 400ms;
+  }
+  
+  .animation-delay-600 {
+    animation-delay: 600ms;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-md bg-white/30 border border-white/20;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-saffron-600 to-deepBlue-600 bg-clip-text text-transparent;
+  }
+}
