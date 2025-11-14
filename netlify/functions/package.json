@@ -1,0 +1,10 @@
+{
+  "name": "vastraverse-netlify-functions",
+  "version": "1.0.0",
+  "description": "Netlify Functions for VastraVerse API",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.38.4",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  }
+}

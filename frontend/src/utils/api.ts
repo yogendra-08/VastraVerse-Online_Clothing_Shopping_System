@@ -6,8 +6,12 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-// API Base URL
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// API Base URL - For Netlify Functions
+const API_BASE_URL = import.meta.env.VITE_API_URL || (
+  import.meta.env.DEV 
+    ? 'http://localhost:8888/.netlify/functions' 
+    : '/.netlify/functions'
+);
 
 // Create axios instance with default config
 const api = axios.create({
@@ -117,7 +121,7 @@ export const authAPI = {
     phone?: string;
     address?: string;
   }): Promise<ApiResponse<{ token: string; user: User }>> => {
-    const response = await api.post('/auth/register', userData);
+    const response = await api.post('/auth-register', userData);
     return response.data;
   },
 
@@ -125,7 +129,7 @@ export const authAPI = {
     email: string;
     password: string;
   }): Promise<ApiResponse<{ token: string; user: User }>> => {
-    const response = await api.post('/auth/login', credentials);
+    const response = await api.post('/auth-login', credentials);
     return response.data;
   },
 

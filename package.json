@@ -3,18 +3,26 @@
   "version": "1.0.0",
   "description": "VastraVerse - Indian Fashion E-commerce Platform",
   "scripts": {
-    "build": "npm run build:frontend && npm run build:backend",
+    "build": "npm run build:frontend",
     "build:frontend": "cd frontend && npm install && npm run build",
     "build:backend": "cd backend && npm install && npm run build",
-    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev": "netlify dev",
     "dev:frontend": "cd frontend && npm run dev",
     "dev:backend": "cd backend && npm run dev",
-    "start": "cd backend && npm start"
+    "start": "cd backend && npm start",
+    "postinstall": "cd frontend && npm install && cd ../backend && npm install"
   },
-  "keywords": ["ecommerce", "fashion", "indian", "react", "nodejs", "supabase"],
+  "keywords": ["ecommerce", "fashion", "indian", "react", "nodejs", "supabase", "netlify"],
   "author": "VastraVerse Team",
   "license": "MIT",
+  "dependencies": {
+    "@netlify/functions": "^2.4.1",
+    "@supabase/supabase-js": "^2.38.4",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  },
   "devDependencies": {
-    "concurrently": "^8.2.2"
+    "concurrently": "^8.2.2",
+    "netlify-cli": "^17.10.1"
   }
 }
