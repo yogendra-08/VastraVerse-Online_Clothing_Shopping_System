@@ -23,9 +23,9 @@ const FeaturedProductCard: React.FC<FeaturedProductCardProps> = ({ product }) =>
     try {
       await addToCart({
         id: product.id,
-        name: product.name,
+        name: product.name || product.title,
         price: product.price,
-        image: product.image,
+        image: product.image || product.thumbnail,
       });
       toast.success('Added to cart!');
     } catch (error) {
@@ -37,9 +37,9 @@ const FeaturedProductCard: React.FC<FeaturedProductCardProps> = ({ product }) =>
     toggleWishlist({
       id: product.id,
       productId: product.id,
-      name: product.name,
+      name: product.name || product.title,
       price: product.price,
-      image: product.image,
+      image: product.image || product.thumbnail,
       category: product.category,
       stock: product.stock,
     });
@@ -159,7 +159,7 @@ const FeaturedProductCard: React.FC<FeaturedProductCardProps> = ({ product }) =>
 
         {/* Product Title */}
         <h3 className="text-sm font-medium text-black mb-2 line-clamp-2 leading-snug">
-          {product.name}
+          {product.name || product.title}
         </h3>
 
         {/* Price */}

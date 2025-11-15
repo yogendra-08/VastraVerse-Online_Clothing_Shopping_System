@@ -23,9 +23,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     try {
       await addToCart({
         id: product.id,
-        name: product.name,
+        name: product.name || product.title,
         price: product.price,
-        image: product.image,
+        image: product.image || product.thumbnail,
       });
     } catch (error) {
       console.error('Failed to add to cart:', error);
@@ -36,9 +36,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     toggleWishlist({
       id: product.id,
       productId: product.id,
-      name: product.name,
+      name: product.name || product.title,
       price: product.price,
-      image: product.image,
+      image: product.image || product.thumbnail,
       category: product.category,
       stock: product.stock,
     });
@@ -60,9 +60,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     <div className="card-product group bg-white border" style={{ borderColor: '#C49E54', borderWidth: '1px' }}>
       <div className="relative">
         <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110"
+          src={product.image || product.thumbnail}
+          alt={product.name || product.title}
+          className="w-full h-64 object-cover transition-transform duration-300 group-hover:scale-105"
         />
         
         {/* Stock badge */}
@@ -116,7 +116,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         </div>
         
         <h3 className="text-lg font-semibold font-heading text-royalBrown mb-2 line-clamp-2">
-          {product.name}
+          {product.name || product.title}
         </h3>
         
         <p className="text-gray-600 text-sm mb-3 line-clamp-2">

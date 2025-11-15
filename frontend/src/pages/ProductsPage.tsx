@@ -26,53 +26,52 @@ const ProductsPage: React.FC = () => {
   const productsPerPage = 12;
 
   useEffect(() => {
-    const fetchProductsFromJson = async () => {
+    const fetchProductsFromAPI = async () => {
       try {
         setIsLoading(true);
 
-        const [mensRes, womensRes, kidsRes] = await Promise.all([
-          fetch('/mens_products.json'),
-          fetch('/womens_products.json'),
-          fetch('/kids_products.json'),
-        ]);
-
-        if (!mensRes.ok || !womensRes.ok || !kidsRes.ok) {
-          throw new Error('Failed to load product JSON files');
-        }
-
-        const [mensData, womensData, kidsData] = await Promise.all([
-          mensRes.json(),
-          womensRes.json(),
-          kidsRes.json(),
-        ]);
-
-        // Normalize products to ensure all required fields
-        const normalizeProducts = (items: any[]): Product[] =>
-          items.map((p) => ({
-            ...p,
-            image: p.image || (Array.isArray(p.images) && p.images.length > 0 ? p.images[0] : 'https://via.placeholder.com/400x600?text=No+Image'),
-            description: p.description || `${p.brand || ''} ${p.name || 'Product'}`.trim(),
-            rating: p.rating || 4.0,
-            stock: p.stock !== undefined ? p.stock : 10,
-            sizes: p.sizes || ['S', 'M', 'L', 'XL'],
-          }));
-
-        const combinedProducts: Product[] = [
-          ...normalizeProducts(mensData?.products || []),
-          ...normalizeProducts(womensData?.products || []),
-          ...normalizeProducts(kidsData?.products || []),
+        // DummyJSON API endpoints for different categories
+        const apiEndpoints = [
+          // Men's products
+          'https://dummyjson.com/products/category/mens-shirts',
+          'https://dummyjson.com/products/category/mens-shoes',
+          // Women's products
+          'https://dummyjson.com/products/category/womens-dresses',
+          'https://dummyjson.com/products/category/womens-bags',
+          // Kids products (using tops as kids category)
+          'https://dummyjson.com/products/category/tops',
         ];
 
-        console.log('Loaded products:', combinedProducts.length);
+        const responses = await Promise.all(
+          apiEndpoints.map(url => fetch(url))
+        );
+
+        const dataPromises = responses.map(res => res.json());
+        const allData = await Promise.all(dataPromises);
+
+        // Normalize DummyJSON products to match our Product interface
+        const normalizeProduct = (p: any): Product => ({
+          ...p,
+          name: p.title, // Map title to name for backward compatibility
+          image: p.thumbnail || p.images[0], // Use thumbnail or first image
+          sizes: ['S', 'M', 'L', 'XL'], // Default sizes
+        });
+
+        // Combine all products from different categories
+        const combinedProducts: Product[] = allData.flatMap(data => 
+          (data.products || []).map(normalizeProduct)
+        );
+
+        console.log('Loaded products from DummyJSON API:', combinedProducts.length);
         setAllProducts(combinedProducts);
       } catch (error) {
-        console.error('Error fetching products from JSON:', error);
+        console.error('Error fetching products from DummyJSON API:', error);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchProductsFromJson();
+    fetchProductsFromAPI();
   }, []);
 
   useEffect(() => {
