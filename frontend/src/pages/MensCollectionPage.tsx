@@ -5,12 +5,11 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Heart, ShoppingCart, Filter, X, Eye, Star } from 'lucide-react';
-import { Product } from '../utils/api';
 import { useCart } from '../hooks/useCart';
 import toast from 'react-hot-toast';
 import { Link } from 'react-router-dom';
 
-// Interface matching the JSON structure
+// Interface for product data
 interface Product {
   id: number;
   name: string;
@@ -23,7 +22,7 @@ interface Product {
   sizes: string[];
 }
 
-// Placeholder products for Men's collection
+// Custom hook to fetch men's products
 const useMensProducts = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
@@ -51,260 +50,6 @@ const useMensProducts = () => {
 
   return { products, loading, error };
 };
-  {
-    id: 302,
-    name: 'Slim Fit Denim Jeans',
-    description: 'Comfortable slim fit jeans with stretch fabric',
-    price: 3299,
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1542272604-787c3835535d?w=600&h=800&fit=crop',
-    stock: 18,
-    rating: 4.7,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 303,
-    name: 'Casual Hoodie',
-    description: 'Comfortable cotton hoodie perfect for everyday wear',
-    price: 2799,
-    category: 'Street Style',
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=800&fit=crop',
-    stock: 22,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 304,
-    name: 'Formal Blazer',
-    description: 'Elegant blazer for business and formal events',
-    price: 5999,
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop',
-    stock: 15,
-    rating: 4.9,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 305,
-    name: 'Bomber Jacket',
-    description: 'Stylish bomber jacket with modern design',
-    price: 4499,
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop',
-    stock: 16,
-    rating: 4.7,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 306,
-    name: 'Slim Fit T-Shirt',
-    description: 'Comfortable slim fit t-shirt with premium fabric',
-    price: 1299,
-    category: 'Street Style',
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=800&fit=crop',
-    stock: 25,
-    rating: 4.5,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 307,
-    name: 'Chino Pants',
-    description: 'Classic chino pants perfect for smart casual look',
-    price: 2999,
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop',
-    stock: 19,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 308,
-    name: 'Leather Jacket',
-    description: 'Premium leather jacket with classic design',
-    price: 8999,
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop',
-    stock: 12,
-    rating: 4.8,
-    sizes: ['M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 309,
-    name: 'Polo Shirt',
-    description: 'Classic polo shirt for casual and semi-formal occasions',
-    price: 1999,
-    category: 'Street Style',
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=800&fit=crop',
-    stock: 21,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 310,
-    name: 'Cargo Pants',
-    description: 'Stylish cargo pants with multiple pockets',
-    price: 3199,
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop',
-    stock: 17,
-    rating: 4.5,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 311,
-    name: 'Wool Sweater',
-    description: 'Warm wool sweater for winter season',
-    price: 3999,
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop',
-    stock: 14,
-    rating: 4.7,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 312,
-    name: 'Formal Trousers',
-    description: 'Elegant formal trousers for business wear',
-    price: 3499,
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop',
-    stock: 18,
-    rating: 4.8,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 313,
-    name: 'Denim Jacket',
-    description: 'Classic denim jacket with vintage wash',
-    price: 3799,
-    category: 'Street Style',
-    image: 'https://images.unsplash.com/photo-1593032465171-8f0b7a0b78cd?w=600&h=800&fit=crop',
-    stock: 20,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 314,
-    name: 'Track Pants',
-    description: 'Comfortable track pants for active lifestyle',
-    price: 2299,
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop',
-    stock: 23,
-    rating: 4.5,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 315,
-    name: 'Button Down Shirt',
-    description: 'Versatile button down shirt for casual wear',
-    price: 2199,
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1520975922203-27d7c9691a49?w=600&h=800&fit=crop',
-    stock: 19,
-    rating: 4.7,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 316,
-    name: 'Hooded Sweatshirt',
-    description: 'Comfortable hooded sweatshirt for casual days',
-    price: 2599,
-    category: 'Street Style',
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=800&fit=crop',
-    stock: 21,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 317,
-    name: 'Suit Jacket',
-    description: 'Premium suit jacket for formal occasions',
-    price: 7999,
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop',
-    stock: 11,
-    rating: 4.9,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 318,
-    name: 'Jogger Pants',
-    description: 'Comfortable jogger pants with elastic waist',
-    price: 2399,
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop',
-    stock: 24,
-    rating: 4.5,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 319,
-    name: 'V-Neck Sweater',
-    description: 'Classic V-neck sweater for layering',
-    price: 2899,
-    category: 'Street Style',
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop',
-    stock: 16,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 320,
-    name: 'Casual Shorts',
-    description: 'Comfortable casual shorts for summer',
-    price: 1799,
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop',
-    stock: 22,
-    rating: 4.4,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 321,
-    name: 'Trench Coat',
-    description: 'Elegant trench coat for formal occasions',
-    price: 6999,
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop',
-    stock: 13,
-    rating: 4.8,
-    sizes: ['M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 322,
-    name: 'Henley Shirt',
-    description: 'Comfortable henley shirt with button placket',
-    price: 1899,
-    category: 'Street Style',
-    image: 'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&h=800&fit=crop',
-    stock: 20,
-    rating: 4.5,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 323,
-    name: 'Corduroy Pants',
-    description: 'Vintage-inspired corduroy pants',
-    price: 2699,
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1473966968600-fa801b869a1a?w=600&h=800&fit=crop',
-    stock: 18,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 324,
-    name: 'Windbreaker Jacket',
-    description: 'Lightweight windbreaker for outdoor activities',
-    price: 3399,
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop',
-    stock: 15,
-    rating: 4.7,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  }
-];
 
 interface MensProductCardProps {
   product: Product;
@@ -317,10 +62,16 @@ const MensProductCard: React.FC<MensProductCardProps> = ({ product }) => {
 
   const handleAddToCart = async () => {
     try {
-      await addToCart(product.id);
+      await addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image
+      });
       toast.success('Added to cart!');
     } catch (error) {
       console.error('Failed to add to cart:', error);
+      toast.error('Failed to add to cart');
     }
   };
 
@@ -551,11 +302,15 @@ const ProductSkeleton: React.FC = () => {
 
 const MensCollectionPage: React.FC = () => {
   const { products: mensProducts, loading, error } = useMensProducts();
+  const [allProducts] = useState<Product[]>(mensProducts);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [sortOption, setSortOption] = useState('featured');
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 50000]);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
   const [showFilters, setShowFilters] = useState(false);
+  const [sortBy, setSortBy] = useState('newest');
+  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
+  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedStyles, setSelectedStyles] = useState<string[]>([]);
   const [quickViewProduct, setQuickViewProduct] = useState<Product | null>(null);
   const { addToCart } = useCart();
   const filterRef = useRef<HTMLDivElement>(null);
@@ -566,7 +321,7 @@ const MensCollectionPage: React.FC = () => {
 
     // Apply price filter
     result = result.filter(
-      (product) => product.price >= priceRange[0] && product.price <= priceRange[1]
+      (product) => product.price >= priceRange.min && product.price <= priceRange.max
     );
 
     // Apply size filter
@@ -576,12 +331,19 @@ const MensCollectionPage: React.FC = () => {
       );
     }
 
+    // Apply brand filter
+    if (selectedBrands.length > 0) {
+      result = result.filter((product) => 
+        selectedBrands.includes(product.category)
+      );
+    }
+
     // Apply sorting
     result.sort((a, b) => {
-      switch (sortOption) {
-        case 'price-low-high':
+      switch (sortBy) {
+        case 'price-low':
           return a.price - b.price;
-        case 'price-high-low':
+        case 'price-high':
           return b.price - a.price;
         case 'rating':
           return b.rating - a.rating;
@@ -593,16 +355,8 @@ const MensCollectionPage: React.FC = () => {
     });
 
     setFilteredProducts(result);
-  }, [mensProducts, sortOption, priceRange, selectedSizes]);
-  const [allProducts] = useState<Product[]>(mensProducts);
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
-  const [displayedProducts, setDisplayedProducts] = useState<Product[]>([]);
-  const [showFilters, setShowFilters] = useState(false);
-  const [sortBy, setSortBy] = useState('newest');
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
-  const [priceRange, setPriceRange] = useState({ min: 0, max: 10000 });
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const [selectedStyles, setSelectedStyles] = useState<string[]>([]);
+    setDisplayedProducts(result.slice(0, 12)); // Show first 12 products initially
+  }, [mensProducts, sortBy, priceRange, selectedSizes, selectedBrands]);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const observerTarget = useRef<HTMLDivElement>(null);
