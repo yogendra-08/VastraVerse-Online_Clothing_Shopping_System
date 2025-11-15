@@ -4,7 +4,8 @@
  */
 
 import React from 'react';
-import { Heart, ShoppingCart, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Heart, ShoppingCart, Star, Eye } from 'lucide-react';
 import { Product } from '../utils/api';
 import { useCart } from '../hooks/useCart';
 import toast from 'react-hot-toast';
@@ -41,7 +42,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const cartQuantity = getItemQuantity(product.id);
 
   return (
-    <div className="card-product group">
+    <div className="card-product group bg-white border" style={{ borderColor: '#C49E54', borderWidth: '1px' }}>
       <div className="relative">
         <img
           src={product.image}
@@ -69,7 +70,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <button
             onClick={handleAddToCart}
             disabled={isOutOfStock}
-            className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+            className="disabled:opacity-50 disabled:cursor-not-allowed px-6 py-3 rounded-luxury font-medium transition-all duration-300"
+            style={{ background: '#2C1810', color: '#F7F4EF' }}
+            onMouseEnter={(e) => {
+              if (!isOutOfStock) {
+                e.currentTarget.style.background = '#C49E54';
+                e.currentTarget.style.color = '#2C1810';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (!isOutOfStock) {
+                e.currentTarget.style.background = '#2C1810';
+                e.currentTarget.style.color = '#F7F4EF';
+              }
+            }}
           >
             <ShoppingCart className="h-4 w-4 mr-2" />
             {inCart ? `In Cart (${cartQuantity})` : 'Add to Cart'}
@@ -84,7 +98,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           </span>
         </div>
         
-        <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
+        <h3 className="text-lg font-semibold font-heading text-royalBrown mb-2 line-clamp-2">
           {product.name}
         </h3>
         
@@ -109,39 +123,76 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           <span className="text-sm text-gray-500 ml-2">({product.rating})</span>
         </div>
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between mb-4">
           <div className="flex items-center space-x-2">
-            <span className="text-xl font-bold text-gray-900">
+            <span className="text-xl font-bold font-heading" style={{ color: '#8B3A3A' }}>
               {formatPrice(product.price)}
             </span>
             {/* Placeholder for original price */}
-            <span className="text-sm text-gray-500 line-through">
+            <span className="text-sm text-chocolate line-through">
               {formatPrice(product.price * 1.2)}
             </span>
           </div>
           
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-chocolate">
             {product.stock > 0 ? `${product.stock} left` : 'Out of stock'}
           </div>
         </div>
 
         {/* Action buttons */}
-        <div className="mt-4 flex space-x-2">
-          <button
-            onClick={handleAddToCart}
-            disabled={isOutOfStock}
-            className="flex-1 btn-primary disabled:opacity-50 disabled:cursor-not-allowed text-sm py-2"
+        <div className="mt-4 flex flex-col space-y-2">
+          <Link
+            to={`/products/${product.id}`}
+            className="w-full py-2 px-4 rounded-luxury font-medium transition-all duration-300 text-center border-2 flex items-center justify-center"
+            style={{ 
+              borderColor: '#C49E54',
+              color: '#8B3A3A',
+              background: 'transparent'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = '#C49E54';
+              e.currentTarget.style.color = '#2C1810';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.color = '#8B3A3A';
+            }}
           >
-            <ShoppingCart className="h-4 w-4 mr-1" />
-            {inCart ? `In Cart (${cartQuantity})` : 'Add to Cart'}
-          </button>
+            <Eye className="h-4 w-4 mr-2" />
+            View Details
+          </Link>
           
-          <button
-            onClick={handleAddToWishlist}
-            className="p-2 border border-gold/30 rounded-luxury hover:border-gold hover:text-gold transition-colors"
-          >
-            <Heart className="h-4 w-4" />
-          </button>
+          <div className="flex space-x-2">
+            <button
+              onClick={handleAddToCart}
+              disabled={isOutOfStock}
+              className="flex-1 disabled:opacity-50 disabled:cursor-not-allowed text-sm py-2 px-4 rounded-luxury font-medium transition-all duration-300"
+              style={{ background: '#2C1810', color: '#F7F4EF' }}
+              onMouseEnter={(e) => {
+                if (!isOutOfStock) {
+                  e.currentTarget.style.background = '#C49E54';
+                  e.currentTarget.style.color = '#2C1810';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isOutOfStock) {
+                  e.currentTarget.style.background = '#2C1810';
+                  e.currentTarget.style.color = '#F7F4EF';
+                }
+              }}
+            >
+              <ShoppingCart className="h-4 w-4 mr-1 inline" />
+              {inCart ? `In Cart (${cartQuantity})` : 'Add to Cart'}
+            </button>
+            
+            <button
+              onClick={handleAddToWishlist}
+              className="p-2 border border-gold/30 rounded-luxury hover:border-gold hover:text-gold transition-colors"
+              style={{ borderColor: '#C49E54' }}
+            >
+              <Heart className="h-4 w-4" />
+            </button>
+          </div>
         </div>
       </div>
     </div>

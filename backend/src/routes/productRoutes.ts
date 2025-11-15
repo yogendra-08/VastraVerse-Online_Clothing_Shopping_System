@@ -12,11 +12,20 @@ import {
   createProduct,
   updateProduct
 } from '../controllers/productController';
+import { 
+  getAllProducts as getAllProductsJSON,
+  getProductById as getProductByIdJSON
+} from '../controllers/jsonProductController';
 import { authenticateToken } from '../middleware/authMiddleware';
 
 const router = Router();
 
-// Public routes
+// JSON-based routes (for placeholder data)
+// Use these routes when you want to serve from JSON file
+router.get('/json', getAllProductsJSON);
+router.get('/json/:id', getProductByIdJSON);
+
+// Database-based routes (existing)
 router.get('/', getAllProducts);
 router.get('/search', searchProducts);
 router.get('/category/:category', getProductsByCategory);

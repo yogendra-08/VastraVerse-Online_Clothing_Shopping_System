@@ -1,71 +1,87 @@
 /**
  * Global Styles for VastraVerse
- * TailwindCSS base styles with custom Indian-inspired design
+ * Premium Luxury Indian Fashion Theme
+ * TailwindCSS base styles with custom luxury design
+ * 
+ * Note: @tailwind and @apply directives are valid Tailwind CSS syntax
+ * Linter warnings about these can be safely ignored
  */
 
+/* @tailwind directives - valid Tailwind CSS syntax */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   * {
-    @apply border-gray-200;
+    @apply border-chocolate/20;
   }
   
   body {
-    @apply bg-gradient-to-br from-orange-50 to-blue-50 font-english text-gray-900;
+    @apply bg-cream font-body text-royalBrown;
     font-feature-settings: "rlig" 1, "calt" 1;
+    letter-spacing: 0.01em;
   }
   
   html {
     scroll-behavior: smooth;
   }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+    letter-spacing: 0.05em;
+  }
 }
 
 @layer components {
-  /* Button Styles */
+  /* Button Styles - Luxury Theme */
   .btn-primary {
-    @apply bg-gradient-to-r from-saffron-500 to-saffron-600 hover:from-saffron-600 hover:to-saffron-700 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105;
+    @apply bg-gradient-to-r from-royalBrown to-chocolate hover:from-chocolate hover:to-royalBrown text-white font-medium px-8 py-4 rounded-luxury shadow-gold hover:shadow-gold-lg transition-all duration-300 transform hover:scale-[1.02] tracking-elegant;
   }
   
   .btn-secondary {
-    @apply bg-gradient-to-r from-deepBlue-600 to-deepBlue-700 hover:from-deepBlue-700 hover:to-deepBlue-800 text-white font-medium px-6 py-3 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105;
+    @apply bg-gradient-to-r from-maroon to-maroon-dark hover:from-maroon-dark hover:to-maroon text-white font-medium px-8 py-4 rounded-luxury shadow-gold hover:shadow-gold-lg transition-all duration-300 transform hover:scale-[1.02] tracking-elegant;
   }
   
   .btn-outline {
-    @apply border-2 border-saffron-500 text-saffron-600 hover:bg-saffron-500 hover:text-white font-medium px-6 py-3 rounded-lg transition-all duration-300;
+    @apply border-2 border-gold text-royalBrown hover:bg-gold hover:text-white font-medium px-8 py-4 rounded-luxury transition-all duration-300 tracking-elegant shadow-gold;
   }
   
   .btn-ghost {
-    @apply text-gray-600 hover:text-saffron-600 hover:bg-saffron-50 font-medium px-4 py-2 rounded-lg transition-all duration-300;
+    @apply text-chocolate hover:text-royalBrown hover:bg-sandBeige font-medium px-6 py-3 rounded-luxury transition-all duration-300 tracking-elegant;
   }
 
-  /* Card Styles */
+  /* Card Styles - Luxury Theme */
   .card {
-    @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105;
+    @apply bg-white rounded-luxury-lg shadow-luxury hover:shadow-gold-lg transition-all duration-300 transform hover:scale-[1.02] border border-gold/20;
   }
   
   .card-product {
-    @apply bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:scale-105 overflow-hidden;
+    @apply bg-white rounded-luxury-lg shadow-luxury transition-all duration-500 transform hover:scale-[1.02] overflow-hidden;
+  }
+  
+  .card-product:hover {
+    box-shadow: 0 10px 25px -5px rgba(196, 158, 84, 0.3), 0 4px 6px -2px rgba(196, 158, 84, 0.2);
+    transform: translateY(-4px);
   }
 
-  /* Input Styles */
+  /* Input Styles - Luxury Theme */
   .input-field {
-    @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-saffron-500 focus:border-saffron-500 transition-all duration-300 bg-white;
+    @apply w-full px-5 py-4 border border-gold/30 rounded-luxury focus:ring-2 focus:ring-gold focus:border-gold transition-all duration-300 bg-cream text-royalBrown placeholder-chocolate/50;
   }
   
   .input-error {
     @apply border-red-500 focus:ring-red-500 focus:border-red-500;
   }
 
-  /* Navigation Styles */
+  /* Navigation Styles - Luxury Theme */
   .nav-link {
-    @apply text-gray-700 hover:text-saffron-600 font-medium transition-colors duration-300 relative;
+    @apply text-chocolate hover:text-royalBrown font-medium transition-colors duration-300 relative tracking-elegant;
   }
   
   .nav-link::after {
     content: '';
-    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-saffron-500 transition-all duration-300;
+    @apply absolute bottom-0 left-0 w-0 h-0.5 bg-gold transition-all duration-300;
   }
   
   .nav-link:hover::after {
@@ -73,29 +89,49 @@
   }
   
   .nav-link.active {
-    @apply text-saffron-600;
+    @apply text-royalBrown;
   }
   
   .nav-link.active::after {
     @apply w-full;
   }
 
-  /* Hero Section */
+  /* Hero Section - Luxury Theme */
   .hero-gradient {
-    @apply bg-gradient-to-br from-saffron-500 via-gold-500 to-deepBlue-600;
+    @apply bg-gradient-to-br from-royalBrown via-chocolate to-maroon;
   }
   
   .hero-text {
-    @apply bg-gradient-to-r from-white to-orange-50 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-white via-cream to-sandBeige bg-clip-text text-transparent;
   }
 
-  /* Category Cards */
+  /* Category Cards - Luxury Theme */
   .category-card {
-    @apply relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 cursor-pointer;
+    @apply relative overflow-hidden rounded-luxury-lg shadow-luxury hover:shadow-gold-lg transition-all duration-500 transform hover:scale-[1.02] cursor-pointer border border-gold/20;
   }
   
   .category-overlay {
-    @apply absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent;
+    @apply absolute inset-0 bg-gradient-to-t from-royalBrown/80 via-chocolate/40 to-transparent;
+  }
+
+  /* Modern Minimal Category Tiles */
+  .category-tile {
+    @apply rounded-xl;
+    box-shadow: 0 2px 8px rgba(44, 24, 16, 0.08);
+  }
+  
+  .category-tile:hover {
+    box-shadow: 0 8px 24px rgba(44, 24, 16, 0.15);
+  }
+
+  /* Hide scrollbar for brands slider */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   /* Product Grid */
@@ -103,9 +139,9 @@
     @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6;
   }
 
-  /* Loading Animation */
+  /* Loading Animation - Luxury Theme */
   .loading-spinner {
-    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-saffron-500;
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-gold;
   }
 
   /* Badge Styles */
@@ -135,11 +171,11 @@
   }
   
   .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-gray-100 rounded-full;
+    @apply bg-cream rounded-full;
   }
   
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-saffron-400 rounded-full hover:bg-saffron-500;
+    @apply bg-gold rounded-full hover:bg-gold-dark;
   }
 }
 
@@ -165,6 +201,149 @@
   }
   
   .gradient-text {
-    @apply bg-gradient-to-r from-saffron-600 to-deepBlue-600 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-royalBrown via-chocolate to-maroon bg-clip-text text-transparent;
   }
+
+  /* Banner Animations */
+  .banner-zoom {
+    animation: slowZoom 20s ease-in-out infinite;
+  }
+
+  .banner-fade-in {
+    animation: fadeInUp 1s ease-out;
+  }
+
+  .banner-slide-up {
+    animation: slideUp 1s ease-out;
+  }
+
+  .banner-content {
+    animation: fadeIn 0.8s ease-out;
+  }
+}
+
+@keyframes slowZoom {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Featured Products - Luxury Modern Animations */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Featured Product Card Hover Effects */
+.featured-product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Gen Z Product Card Hover Effects */
+.genz-product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Men's Product Card Hover Effects */
+.mens-product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Women's Product Card Hover Effects */
+.womens-product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Kids Product Card Hover Effects */
+.kids-product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Traditional Product Card Hover Effects */
+.traditional-product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Summer Collection Product Card Hover Effects */
+.summer-product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Collection Product Card Hover Effects */
+.collection-product-card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  transform: translateY(-2px);
+}
+
+/* Skeleton Loader Animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.animate-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }

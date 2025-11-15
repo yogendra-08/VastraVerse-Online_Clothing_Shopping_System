@@ -138,7 +138,7 @@ const LoginPage: React.FC<LoginPageProps> = ({ setUser }) => {
           <div className="text-center">
             <p className="text-gray-600">
               Don't have an account?{' '}
-              <Link to="/signup" className="text-saffron-600 hover:text-saffron-500 font-medium">
+              <Link to="/signup" className="text-gold hover:text-gold-light font-medium">
                 Sign up here
               </Link>
             </p>

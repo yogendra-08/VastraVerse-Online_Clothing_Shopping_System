@@ -6,10 +6,10 @@
 import axios from 'axios';
 import toast from 'react-hot-toast';
 
-// API Base URL - For Netlify Functions
+// API Base URL - For Netlify Functions or Direct Backend
 const API_BASE_URL = import.meta.env.VITE_API_URL || (
   import.meta.env.DEV 
-    ? 'http://localhost:8888/.netlify/functions' 
+    ? 'http://localhost:5000/api' // Direct backend server in development
     : '/.netlify/functions'
 );
 
@@ -68,16 +68,39 @@ export interface User {
   updated_at?: string;
 }
 
+export interface ProductColor {
+  name: string;
+  hex: string;
+  image: string;
+}
+
+export interface ProductReview {
+  id: number;
+  user: string;
+  rating: number;
+  comment: string;
+  date: string;
+}
+
 export interface Product {
   id: number;
-  name: string;
+  title?: string; // For JSON products
+  name?: string; // For database products
+  brand: string;
   description: string;
   price: number;
-  category: string;
+  discount?: number;
+  category?: string;
   image: string;
+  imageBack?: string;
   stock: number;
   rating: number;
   sizes: string[];
+  colors?: ProductColor[];
+  materials?: string;
+  careInstructions?: string;
+  reviews?: ProductReview[];
+  related?: number[];
   created_at?: string;
   updated_at?: string;
 }
@@ -157,6 +180,17 @@ export const productsAPI = {
 
   getById: async (id: number): Promise<ApiResponse<{ product: Product }>> => {
     const response = await api.get(`/products/${id}`);
+    return response.data;
+  },
+
+  // JSON-based endpoints (for placeholder data)
+  getAllJSON: async (): Promise<ApiResponse<{ products: Product[] }>> => {
+    const response = await api.get('/products/json');
+    return response.data;
+  },
+
+  getByIdJSON: async (id: number): Promise<ApiResponse<{ product: Product }>> => {
+    const response = await api.get(`/products/json/${id}`);
     return response.data;
   },
 

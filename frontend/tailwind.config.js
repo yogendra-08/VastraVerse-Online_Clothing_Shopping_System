@@ -7,47 +7,47 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Indian-inspired color palette
-        saffron: {
-          50: '#fef7ed',
-          100: '#fdedd5',
-          200: '#fbd7aa',
-          300: '#f8bb74',
-          400: '#f4943c',
-          500: '#f17316', // Main saffron
-          600: '#e25a0c',
-          700: '#bb430c',
-          800: '#953612',
-          900: '#782e12',
+        // Premium Luxury Indian Fashion Palette
+        royalBrown: {
+          DEFAULT: '#2C1810',
+          light: '#3D2418',
+          dark: '#1A0E08',
         },
-        deepBlue: {
-          50: '#eff6ff',
-          100: '#dbeafe',
-          200: '#bfdbfe',
-          300: '#93c5fd',
-          400: '#60a5fa',
-          500: '#3b82f6',
-          600: '#2563eb',
-          700: '#1d4ed8',
-          800: '#1e40af', // Main deep blue
-          900: '#1e3a8a',
+        chocolate: {
+          DEFAULT: '#4A2E29',
+          light: '#5A3E39',
+          dark: '#3A1E19',
+        },
+        maroon: {
+          DEFAULT: '#8B3A3A',
+          light: '#9B4A4A',
+          dark: '#7B2A2A',
         },
         gold: {
-          50: '#fefce8',
-          100: '#fef9c3',
-          200: '#fef08a',
-          300: '#fde047',
-          400: '#facc15',
-          500: '#eab308', // Main gold
-          600: '#ca8a04',
-          700: '#a16207',
-          800: '#854d0e',
-          900: '#713f12',
+          DEFAULT: '#C49E54',
+          light: '#D4AE64',
+          dark: '#B48E44',
         },
+        sandBeige: '#E9E4D4',
+        cream: '#F7F4EF',
       },
       fontFamily: {
+        'heading': ['Playfair Display', 'Cormorant Garamond', 'serif'],
+        'body': ['Inter', 'Lato', 'sans-serif'],
         'hindi': ['Noto Sans Devanagari', 'sans-serif'],
-        'english': ['Inter', 'sans-serif'],
+      },
+      letterSpacing: {
+        'elegant': '0.05em',
+        'luxury': '0.1em',
+      },
+      borderRadius: {
+        'luxury': '12px',
+        'luxury-lg': '14px',
+      },
+      boxShadow: {
+        'gold': '0 4px 6px -1px rgba(196, 158, 84, 0.2), 0 2px 4px -1px rgba(196, 158, 84, 0.1)',
+        'gold-lg': '0 10px 15px -3px rgba(196, 158, 84, 0.2), 0 4px 6px -2px rgba(196, 158, 84, 0.1)',
+        'luxury': '0 20px 25px -5px rgba(44, 24, 16, 0.1), 0 10px 10px -5px rgba(44, 24, 16, 0.04)',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',

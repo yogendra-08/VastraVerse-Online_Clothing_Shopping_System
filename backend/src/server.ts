@@ -87,17 +87,24 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
 // Initialize database and start server
 const startServer = async () => {
   try {
-    // Connect to database
-    await connectDB();
-    
-    // Initialize database tables
-    await initializeTables();
+    // Try to connect to database (optional for JSON endpoints)
+    try {
+      await connectDB();
+      await initializeTables();
+      console.log('✅ Database connected successfully');
+    } catch (dbError) {
+      console.warn('⚠️  Database connection failed, but server will continue with JSON endpoints only');
+      console.warn('   Error:', (dbError as Error).message);
+      console.warn('   JSON product endpoints will still work: /api/products/json');
+    }
     
     // For Vercel deployment
     if (process.env.NODE_ENV !== 'production') {
       app.listen(PORT, () => {
         console.log(`🚀 Server running on port ${PORT}`);
         console.log(`📱 Frontend URL: ${process.env.FRONTEND_URL || 'http://localhost:3000'}`);
+        console.log(`📦 JSON Products API: http://localhost:${PORT}/api/products/json`);
+        console.log(`📦 Single Product API: http://localhost:${PORT}/api/products/json/:id`);
       });
     }
   } catch (error) {

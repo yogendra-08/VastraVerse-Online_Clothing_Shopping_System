@@ -8,21 +8,33 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// Supabase configuration
-const supabaseUrl = process.env.SUPABASE_URL!;
-const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY!;
-const supabaseAnonKey = process.env.SUPABASE_ANON_KEY!;
+// Supabase configuration (optional for JSON endpoints)
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
 
-if (!supabaseUrl || !supabaseServiceKey) {
-  throw new Error('Missing Supabase environment variables');
+// Only throw error if trying to use database features without credentials
+export const hasDatabaseConfig = !!(supabaseUrl && supabaseServiceKey);
+
+if (!hasDatabaseConfig) {
+  console.warn('⚠️  Supabase environment variables not set. Database features will be disabled.');
+  console.warn('   JSON product endpoints will still work.');
 }
 
-// Create Supabase clients
-export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseServiceKey);
-export const supabaseAnon: SupabaseClient = createClient(supabaseUrl, supabaseAnonKey);
+// Create Supabase clients (only if config exists)
+export const supabase: SupabaseClient | null = hasDatabaseConfig 
+  ? createClient(supabaseUrl!, supabaseServiceKey!)
+  : null;
+export const supabaseAnon: SupabaseClient | null = hasDatabaseConfig && supabaseAnonKey
+  ? createClient(supabaseUrl!, supabaseAnonKey)
+  : null;
 
 // Test database connection
 export const testConnection = async () => {
+  if (!supabase) {
+    console.warn('⚠️  Supabase client not initialized');
+    return false;
+  }
   try {
     const { data, error } = await supabase.from('users').select('count').limit(1);
     if (error && error.code !== 'PGRST116') { // PGRST116 is "relation does not exist"
@@ -218,7 +230,18 @@ CREATE POLICY "Users can delete own wishlist" ON wishlist FOR DELETE USING (auth
 `;
 };
 
+export const connectDB = async () => {
+  if (!hasDatabaseConfig || !supabase) {
+    throw new Error('Database configuration not available');
+  }
+  return testConnection();
+};
+
 export const initializeTables = async () => {
+  if (!hasDatabaseConfig) {
+    console.log('📝 Database not configured. Skipping table initialization.');
+    return true;
+  }
   console.log('📝 To initialize your Supabase database, run the following SQL in your Supabase SQL editor:');
   console.log(getInitializationSQL());
   return true;

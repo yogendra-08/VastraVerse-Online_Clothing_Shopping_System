@@ -12,7 +12,10 @@ import {
   Menu, 
   X, 
   LogOut,
-  Search
+  Search,
+  ChevronDown,
+  Package,
+  Phone
 } from 'lucide-react';
 import { User as UserType, removeAuthToken } from '../utils/api';
 import { useCart } from '../hooks/useCart';
@@ -25,7 +28,7 @@ interface NavbarProps {
 
 const Navbar: React.FC<NavbarProps> = ({ user, setUser }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
@@ -34,7 +37,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser }) => {
   const handleLogout = () => {
     removeAuthToken();
     setUser(null);
-    setIsUserMenuOpen(false);
+    setIsProfileMenuOpen(false);
     toast.success('Logged out successfully!');
     navigate('/');
   };
@@ -54,7 +57,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser }) => {
 
   const navLinks = [
     { path: '/', label: 'Home' },
-    { path: '/products', label: 'Products' },
+    { path: '/genz', label: 'Genz' },
     { path: '/products/men', label: 'Men' },
     { path: '/products/women', label: 'Women' },
     { path: '/products/kids', label: 'Kids' },
@@ -103,87 +106,139 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser }) => {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gold/30 rounded-luxury focus:ring-2 focus:ring-gold focus:border-gold bg-cream text-royalBrown"
               />
-              <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+              <Search className="absolute left-3 top-2.5 h-4 w-4" style={{ color: '#8B3A3A' }} strokeWidth={1.5} />
             </form>
           </div>
 
           {/* Right Side Icons */}
-          <div className="flex items-center space-x-4">
-            {user ? (
-              <>
-                {/* Wishlist */}
-                <Link
-                  to="/wishlist"
-                  className="p-2 text-chocolate hover:text-royalBrown transition-colors relative"
-                >
-                  <Heart className="h-6 w-6" />
-                </Link>
+          <div className="flex items-center space-x-3">
+            {/* Wishlist */}
+            <Link
+              to="/wishlist"
+              className="p-2 text-chocolate hover:text-royalBrown transition-colors relative group"
+              title="Wishlist"
+            >
+              <Heart className="h-5 w-5" strokeWidth={1.5} />
+            </Link>
 
-                {/* Cart */}
-                <Link
-                  to="/cart"
-                  className="p-2 text-chocolate hover:text-royalBrown transition-colors relative"
-                >
-                  <ShoppingCart className="h-6 w-6" />
-                  {totalItems > 0 && (
-                    <span className="absolute -top-1 -right-1 bg-gold text-royalBrown text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
-                      {totalItems}
-                    </span>
-                  )}
-                </Link>
+            {/* Cart */}
+            <Link
+              to="/cart"
+              className="p-2 text-chocolate hover:text-royalBrown transition-colors relative group"
+              title="Cart"
+            >
+              <ShoppingCart className="h-5 w-5" strokeWidth={1.5} />
+              {totalItems > 0 && (
+                <span className="absolute -top-1 -right-1 bg-gold text-royalBrown text-xs rounded-full h-4 w-4 flex items-center justify-center font-medium text-[10px]">
+                  {totalItems}
+                </span>
+              )}
+            </Link>
 
-                {/* User Menu */}
-                <div className="relative">
-                  <button
-                    onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                    className="flex items-center space-x-2 p-2 text-gray-600 hover:text-saffron-600 transition-colors"
-                  >
-                    <User className="h-6 w-6" />
-                    <span className="hidden sm:block text-sm font-medium">
-                      {user.name}
-                    </span>
-                  </button>
+            {/* Profile with Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
+                className="flex items-center space-x-1 p-2 text-chocolate hover:text-royalBrown transition-colors group"
+                title="Profile"
+              >
+                <User className="h-5 w-5" strokeWidth={1.5} />
+                <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isProfileMenuOpen ? 'rotate-180' : ''}`} strokeWidth={1.5} />
+              </button>
 
-                  {isUserMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
-                      <div className="px-4 py-2 border-b">
-                        <p className="text-sm font-medium text-gray-900">{user.name}</p>
-                        <p className="text-sm text-gray-500">{user.email}</p>
+              {/* Profile Dropdown Menu */}
+              {isProfileMenuOpen && (
+                <div className="absolute right-0 mt-2 w-56 bg-white rounded-luxury-lg shadow-luxury border border-gold/20 py-2 z-50">
+                  {user ? (
+                    <>
+                      <div className="px-4 py-3 border-b border-gold/20">
+                        <p className="text-sm font-semibold font-heading text-royalBrown">{user.name}</p>
+                        <p className="text-xs text-chocolate mt-1">{user.email}</p>
                       </div>
-                      <button
-                        onClick={handleLogout}
-                        className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center space-x-2"
+                      <Link
+                        to="/orders"
+                        className="flex items-center space-x-3 px-4 py-2.5 text-sm text-chocolate hover:bg-sandBeige transition-colors"
+                        onClick={() => setIsProfileMenuOpen(false)}
                       >
-                        <LogOut className="h-4 w-4" />
+                        <Package className="h-4 w-4" strokeWidth={1.5} />
+                        <span>Orders</span>
+                      </Link>
+                      <Link
+                        to="/contact"
+                        className="flex items-center space-x-3 px-4 py-2.5 text-sm text-chocolate hover:bg-sandBeige transition-colors"
+                        onClick={() => setIsProfileMenuOpen(false)}
+                      >
+                        <Phone className="h-4 w-4" strokeWidth={1.5} />
+                        <span>Contact Us</span>
+                      </Link>
+                      <div className="border-t border-gold/20 my-1"></div>
+                      <button
+                        onClick={() => {
+                          handleLogout();
+                          setIsProfileMenuOpen(false);
+                        }}
+                        className="w-full text-left flex items-center space-x-3 px-4 py-2.5 text-sm text-chocolate hover:bg-sandBeige transition-colors"
+                      >
+                        <LogOut className="h-4 w-4" strokeWidth={1.5} />
                         <span>Logout</span>
                       </button>
-                    </div>
+                    </>
+                  ) : (
+                    <>
+                      <Link
+                        to="/login"
+                        className="flex items-center space-x-3 px-4 py-2.5 text-sm text-chocolate hover:bg-sandBeige transition-colors"
+                        onClick={() => setIsProfileMenuOpen(false)}
+                      >
+                        <User className="h-4 w-4" strokeWidth={1.5} />
+                        <span>Login</span>
+                      </Link>
+                      <Link
+                        to="/signup"
+                        className="flex items-center space-x-3 px-4 py-2.5 text-sm text-chocolate hover:bg-sandBeige transition-colors"
+                        onClick={() => setIsProfileMenuOpen(false)}
+                      >
+                        <User className="h-4 w-4" strokeWidth={1.5} />
+                        <span>Sign Up</span>
+                      </Link>
+                      <div className="border-t border-gold/20 my-1"></div>
+                      <Link
+                        to="/orders"
+                        className="flex items-center space-x-3 px-4 py-2.5 text-sm text-chocolate hover:bg-sandBeige transition-colors"
+                        onClick={() => setIsProfileMenuOpen(false)}
+                      >
+                        <Package className="h-4 w-4" strokeWidth={1.5} />
+                        <span>Orders</span>
+                      </Link>
+                      <Link
+                        to="/contact"
+                        className="flex items-center space-x-3 px-4 py-2.5 text-sm text-chocolate hover:bg-sandBeige transition-colors"
+                        onClick={() => setIsProfileMenuOpen(false)}
+                      >
+                        <Phone className="h-4 w-4" strokeWidth={1.5} />
+                        <span>Contact Us</span>
+                      </Link>
+                    </>
                   )}
                 </div>
-              </>
-            ) : (
-              <div className="flex items-center space-x-2">
-                <Link
-                  to="/login"
-                  className="btn-ghost"
-                >
-                  Login
-                </Link>
-                <Link
-                  to="/signup"
-                  className="btn-primary"
-                >
-                  Sign Up
-                </Link>
-              </div>
+              )}
+            </div>
+
+            {/* Overlay to close profile menu when clicking outside */}
+            {isProfileMenuOpen && (
+              <div
+                className="fixed inset-0 z-40"
+                onClick={() => setIsProfileMenuOpen(false)}
+              />
             )}
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="lg:hidden p-2 text-chocolate hover:text-royalBrown transition-colors"
+              aria-label="Toggle menu"
             >
-              {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isMenuOpen ? <X className="h-5 w-5" strokeWidth={1.5} /> : <Menu className="h-5 w-5" strokeWidth={1.5} />}
             </button>
           </div>
         </div>
@@ -201,7 +256,7 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser }) => {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-10 pr-4 py-2 border border-gold/30 rounded-luxury focus:ring-2 focus:ring-gold focus:border-gold bg-cream text-royalBrown"
                 />
-                <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 top-2.5 h-4 w-4" style={{ color: '#8B3A3A' }} strokeWidth={1.5} />
               </form>
             </div>
 
@@ -224,13 +279,6 @@ const Navbar: React.FC<NavbarProps> = ({ user, setUser }) => {
         )}
       </div>
 
-      {/* Overlay for user menu */}
-      {isUserMenuOpen && (
-        <div
-          className="fixed inset-0 z-40"
-          onClick={() => setIsUserMenuOpen(false)}
-        />
-      )}
     </nav>
   );
 };

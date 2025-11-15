@@ -11,16 +11,32 @@ import HomePage from './pages/HomePage';
 import ProductsPage from './pages/ProductsPage';
 import CartPage from './pages/CartPage';
 import WishlistPage from './pages/WishlistPage';
+import GenZPage from './pages/GenZPage';
+import MensCollectionPage from './pages/MensCollectionPage';
+import WomensCollectionPage from './pages/WomensCollectionPage';
+import KidsCollectionPage from './pages/KidsCollectionPage';
+import TraditionalCollectionPage from './pages/TraditionalCollectionPage';
+import SummerCollectionPage from './pages/SummerCollectionPage';
+import CollectionPage from './pages/CollectionPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-br from-orange-50 to-blue-50">
+    <div className="min-h-screen flex flex-col bg-cream">
       <Navbar user={null} setUser={() => {}} />
       
       <main className="flex-1">
         <Routes>
           {/* Public Routes */}
           <Route path="/" element={<HomePage />} />
+          <Route path="/genz" element={<GenZPage />} />
+          <Route path="/summer-collection" element={<SummerCollectionPage />} />
+          <Route path="/collection" element={<CollectionPage />} />
+          <Route path="/product/:id" element={<ProductDetailsPage />} />
+          <Route path="/products/men" element={<MensCollectionPage />} />
+          <Route path="/products/women" element={<WomensCollectionPage />} />
+          <Route path="/products/kids" element={<KidsCollectionPage />} />
+          <Route path="/products/traditional" element={<TraditionalCollectionPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/:category" element={<ProductsPage />} />
           <Route path="/cart" element={<CartPage />} />

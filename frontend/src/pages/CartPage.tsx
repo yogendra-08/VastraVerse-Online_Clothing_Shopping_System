@@ -59,7 +59,7 @@ const CartPage: React.FC = () => {
                   />
                   <div className="flex-1">
                     <h3 className="text-lg font-semibold text-gray-900">{item.product_name}</h3>
-                    <p className="text-saffron-600 font-medium">{formatPrice(item.product_price)}</p>
+                    <p className="text-gold font-medium">{formatPrice(item.product_price)}</p>
                   </div>
                   <div className="flex items-center space-x-2">
                     <button
