@@ -648,6 +648,108 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+      {/* Why Choose VastraVerse Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Why Choose VastraVerse?</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">Experience the perfect blend of style, comfort, and quality in every piece we create.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {/* Feature Card 1 */}
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden">
+              <div className="w-full h-48 overflow-hidden">
+                <img 
+                  src="/src/feedback/img2.png" 
+                  alt="Elevate Your Everyday" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Designed to Elevate Your Everyday</h3>
+                <p className="text-gray-600">Our collections blend style and comfort, helping customers feel confident every day.</p>
+              </div>
+            </div>
+
+            {/* Feature Card 2 */}
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden">
+              <div className="w-full h-48 overflow-hidden">
+                <img 
+                  src="/src/feedback/img1.png" 
+                  alt="Comfort That Moves With You" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Comfort That Moves With You</h3>
+                <p className="text-gray-600">Premium, skin-friendly fabrics designed to keep users relaxed and active.</p>
+              </div>
+            </div>
+
+            {/* Feature Card 3 */}
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden">
+              <div className="w-full h-48 overflow-hidden">
+                <img 
+                  src="/src/feedback/img3.png" 
+                  alt="Timeless Style, Modern Touch" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Timeless Style, Modern Touch</h3>
+                <p className="text-gray-600">A mix of classic silhouettes with contemporary details for a fresh, meaningful wardrobe.</p>
+              </div>
+            </div>
+
+            {/* Feature Card 4 */}
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden">
+              <div className="w-full h-48 overflow-hidden">
+                <img 
+                  src="/src/feedback/img4.png" 
+                  alt="Crafted With Purpose" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Crafted With Purpose</h3>
+                <p className="text-gray-600">Every piece is created with thoughtful craftsmanship and attention to detail.</p>
+              </div>
+            </div>
+
+            {/* Feature Card 5 */}
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden">
+              <div className="w-full h-48 overflow-hidden">
+                <img 
+                  src="/src/feedback/img5.png" 
+                  alt="Your Style, Your Identity" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Your Style, Your Identity</h3>
+                <p className="text-gray-600">Fashion that reflects the customer's personality — bold, minimal, or experimental.</p>
+              </div>
+            </div>
+
+            {/* Feature Card 6 */}
+            <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 border border-gray-100 overflow-hidden">
+              <div className="w-full h-48 overflow-hidden">
+                <img 
+                  src="/src/feedback/img6.png" 
+                  alt="Made for Real Life" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">Made for Real Life</h3>
+                <p className="text-gray-600">Clothing that is durable, versatile, and perfect for everyday use.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Newsletter Section */}
       <section 
         className="py-20 text-white relative overflow-hidden"
