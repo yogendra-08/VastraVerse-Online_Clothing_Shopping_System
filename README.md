@@ -52,6 +52,17 @@ VastraVerse is a full-stack online clothing shopping web application that celebr
 - **Express Rate Limit** for API protection
 - **Netlify Functions** for serverless backend
 
+  ### 🖼️ Screenshots
+
+![Home Page](https://github.com/yogendra-08/VastraVerse-Online_Clothing_Shopping_System/blob/main/pictures/home-page.png?raw=true)
+
+![Category Page](https://github.com/yogendra-08/VastraVerse-Online_Clothing_Shopping_System/blob/main/pictures/category.png?raw=true)
+
+![GenZ Collection](https://github.com/yogendra-08/VastraVerse-Online_Clothing_Shopping_System/blob/main/pictures/genz.png?raw=true)
+
+![Traditional Collection](https://github.com/yogendra-08/VastraVerse-Online_Clothing_Shopping_System/blob/main/pictures/traditional.png?raw=true)
+
+
 ## 📁 Project Structure
 
 ```
