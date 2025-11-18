@@ -6,7 +6,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle, Truck, Package, CheckCircle2, Clock, MapPin, ArrowRight } from 'lucide-react';
-import { useCart } from '../hooks/useCart';
+import { useCart, type CartItem } from '../hooks/useCart';
 import { orderAPI, type OrderItem } from '../utils/api';
 import toast from 'react-hot-toast';
 import Receipt from '../components/Receipt';
@@ -39,6 +39,33 @@ const getCurrentDate = () => {
       month: 'long',
     })
   };
+};
+
+type CollectionType = 'men' | 'women';
+
+const normalizeCollectionFromValue = (value?: string | null): CollectionType | undefined => {
+  if (!value) return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === 'men' || normalized === 'male') return 'men';
+  if (normalized === 'women' || normalized === 'female') return 'women';
+  return undefined;
+};
+
+const inferCollectionFromText = (value?: string | null): CollectionType | undefined => {
+  if (!value) return undefined;
+  const normalized = value.toLowerCase();
+  if (normalized.includes('women')) return 'women';
+  if (normalized.includes('men')) return 'men';
+  return undefined;
+};
+
+const getCartItemCollection = (item: CartItem): CollectionType => {
+  return (
+    normalizeCollectionFromValue(item.collection) ??
+    normalizeCollectionFromValue(item.gender) ??
+    inferCollectionFromText(item.category) ??
+    inferCollectionFromText(item.name)
+  ) || 'men';
 };
 
 const CheckoutPage: React.FC = () => {
@@ -185,7 +212,7 @@ const CheckoutPage: React.FC = () => {
         product_price: item.price,
         product_image: item.image || '',
         quantity: item.quantity || 1,
-        collection: 'men' as 'men' | 'women', // You can determine this based on product data
+        collection: getCartItemCollection(item),
       }));
 
       // Create order in database

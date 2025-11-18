@@ -58,7 +58,10 @@ const ProductCard = ({ product }: { product: Product }) => {
       quantity: 1,
       image: product.image || '',
       size: product.sizes?.[0] || 'M',
-      product
+      product,
+      category: product.category,
+      gender: product.gender,
+      collection: product.gender === 'women' ? 'women' : product.gender === 'men' ? 'men' : undefined,
     });
     toast.success('Added to cart!');
   };

@@ -7,13 +7,18 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import toast from 'react-hot-toast';
 
-interface CartItem {
+type CollectionType = 'men' | 'women';
+
+export interface CartItem {
   id: number;
   productId: number;
   quantity: number;
   price: number;
   name: string;
   image: string;
+  category?: string;
+  gender?: string;
+  collection?: CollectionType;
 }
 
 interface ProductDetails {
@@ -21,7 +26,37 @@ interface ProductDetails {
   name: string;
   price: number;
   image: string;
+  title?: string;
+  category?: string;
+  gender?: string;
+  collection?: CollectionType;
 }
+
+const normalizeCollectionValue = (value?: string | null): CollectionType | undefined => {
+  if (!value) return undefined;
+  const normalized = value.trim().toLowerCase();
+  if (normalized === 'men' || normalized === 'male') return 'men';
+  if (normalized === 'women' || normalized === 'female') return 'women';
+  return undefined;
+};
+
+const matchCollectionInText = (value?: string | null): CollectionType | undefined => {
+  if (!value) return undefined;
+  const normalized = value.toLowerCase();
+  if (normalized.includes('women')) return 'women';
+  if (normalized.includes('men')) return 'men';
+  return undefined;
+};
+
+const deriveCollection = (details: ProductDetails): CollectionType | undefined => {
+  return (
+    normalizeCollectionValue(details.collection) ??
+    normalizeCollectionValue(details.gender) ??
+    matchCollectionInText(details.category) ??
+    matchCollectionInText(details.name) ??
+    matchCollectionInText(details.title)
+  );
+};
 
 interface CartState {
   items: CartItem[];
@@ -65,6 +100,7 @@ export const useCart = create<CartState>()(
         const validQuantity = Number(quantity) || 1;
         const validPrice = Number(productDetails.price) || 0;
         const validId = Number(productDetails.id);
+        const inferredCollection = deriveCollection(productDetails);
         
         if (!validId || validId <= 0) {
           toast.error('Invalid product ID');
@@ -89,7 +125,13 @@ export const useCart = create<CartState>()(
           // Update existing item
           newItems = items.map(item =>
             item.productId === validId
-              ? { ...item, quantity: (item.quantity || 0) + validQuantity }
+              ? {
+                  ...item,
+                  quantity: (item.quantity || 0) + validQuantity,
+                  collection: item.collection || inferredCollection,
+                  category: item.category || productDetails.category,
+                  gender: item.gender || productDetails.gender,
+                }
               : item
           );
         } else {
@@ -101,6 +143,9 @@ export const useCart = create<CartState>()(
             price: validPrice,
             name: productDetails.name || 'Product',
             image: productDetails.image || '',
+            category: productDetails.category,
+            gender: productDetails.gender,
+            collection: inferredCollection,
           };
           newItems = [...items, newItem];
         }

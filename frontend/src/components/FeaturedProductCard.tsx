@@ -26,6 +26,9 @@ const FeaturedProductCard: React.FC<FeaturedProductCardProps> = ({ product }) =>
         name: product.name || product.title || 'Product',
         price: product.price,
         image: product.image || product.thumbnail || '',
+        category: product.category,
+        gender: product.gender,
+        collection: product.gender === 'women' ? 'women' : product.gender === 'men' ? 'men' : undefined,
       });
       toast.success('Added to cart!');
     } catch (error) {

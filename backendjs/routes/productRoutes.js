@@ -15,8 +15,8 @@ const {
 // Public routes
 router.get('/men', getMenProducts);
 router.get('/women', getWomenProducts);
-router.get('/:collection/:id', getProductById);
 router.get('/:collection/search', searchProducts);
+router.get('/:collection/:id', getProductById);
 
 module.exports = router;
 

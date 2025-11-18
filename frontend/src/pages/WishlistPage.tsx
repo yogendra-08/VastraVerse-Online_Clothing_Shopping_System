@@ -34,6 +34,8 @@ const WishlistPage: React.FC = () => {
         name: item.name,
         price: item.price,
         image: item.image,
+        category: item.category,
+        collection: item.category?.toLowerCase().includes('women') ? 'women' : item.category?.toLowerCase().includes('men') ? 'men' : undefined,
       });
       removeFromWishlist(productId);
       toast.success(`${item.name} moved to cart!`);

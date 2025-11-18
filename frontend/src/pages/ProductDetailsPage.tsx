@@ -114,6 +114,9 @@ const ProductDetailsPage: React.FC = () => {
         name: product.name || product.title || 'Product',
         price: productPrice,
         image: product.image || product.thumbnail || '',
+        category: product.category,
+        gender: product.gender,
+        collection: product.gender === 'women' ? 'women' : product.gender === 'men' ? 'men' : undefined,
       }, quantity);
       toast.success(`Added ${quantity} item(s) to cart!`);
     } catch (error) {

@@ -22,7 +22,15 @@ const CollectionProductCard: React.FC<CollectionProductCardProps> = ({ product }
 
   const handleAddToCart = async () => {
     try {
-      await addToCart(product.id);
+      await addToCart({
+        id: product.id,
+        name: product.name || product.title || 'Product',
+        price: product.price,
+        image: product.image,
+        category: product.category,
+        gender: product.gender,
+        collection: product.gender === 'women' ? 'women' : product.gender === 'men' ? 'men' : undefined,
+      });
       toast.success('Added to cart!');
     } catch (error) {
       console.error('Failed to add to cart:', error);

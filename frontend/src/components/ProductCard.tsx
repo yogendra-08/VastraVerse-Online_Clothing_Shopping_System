@@ -31,6 +31,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         name: product.name || product.title || 'Product',
         price: Number(product.price) || 0,
         image: product.image || product.thumbnail || '',
+        category: product.category,
+        gender: product.gender,
+        collection: product.gender === 'women' ? 'women' : product.gender === 'men' ? 'men' : undefined,
       });
     } catch (error) {
       console.error('Failed to add to cart:', error);
