@@ -1,14 +1,19 @@
 [build]
+  # Build the frontend
   base = "frontend"
   publish = "dist"
-  command = "npm install --no-audit --no-fund && npm run build"
+  command = "npm install && npm run build"
 
 [build.environment]
   NODE_VERSION = "18"
   NPM_VERSION = "9"
   NODE_ENV = "production"
-  NPM_FLAGS = "--production=false"  # Ensure devDependencies are installed
+  # Install all dependencies including devDependencies
+  NPM_FLAGS = "--production=false"
+  # Vite configuration
+  VITE_API_URL = "/.netlify/functions"
   
+# Serverless functions configuration
 [functions]
   directory = "netlify/functions"
   node_bundler = "esbuild"
@@ -18,6 +23,12 @@
 [[redirects]]
   from = "/api/*"
   to = "/.netlify/functions/:splat"
+  status = 200
+
+# SPA fallback for React Router
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
   status = 200
 
 # SPA fallback for React Router
