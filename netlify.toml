@@ -8,8 +8,9 @@
   NODE_ENV = "production"
   
 [functions]
-  node_bundler = "esbuild"
   directory = "netlify/functions"
+  node_bundler = "esbuild"
+  external_node_modules = ["@supabase/supabase-js", "bcryptjs", "jsonwebtoken"]
 
 # Redirect all API calls to Netlify Functions
 [[redirects]]
@@ -22,11 +23,6 @@
   from = "/*"
   to = "/index.html"
   status = 200
-
-[functions]
-  directory = "netlify/functions"
-  node_bundler = "esbuild"
-  external_node_modules = ["@supabase/supabase-js", "bcryptjs", "jsonwebtoken"]
 
 [dev]
   command = "npm run dev"
