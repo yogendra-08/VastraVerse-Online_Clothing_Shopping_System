@@ -5,175 +5,14 @@
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Star, ShoppingBag, Heart, Users, ChevronLeft, ChevronRight, ArrowUp, Eye, ShoppingCart } from 'lucide-react';
+import { ArrowRight, Star, ShoppingBag, Heart, Users, ChevronLeft, ChevronRight, ArrowUp } from 'lucide-react';
 import { Product } from '../utils/api';
-import { localProductsAPI } from '../utils/localApi';
-// Import removed as it's not being used
-
-// Premium products collection
-const premiumProducts: Product[] = [
-  {
-    id: 1001,
-    name: 'Luxury Silk Saree',
-    description: 'Handwoven Banarasi silk saree with pure zari work',
-    price: 12999,
-    brand: 'Royal Weaves',
-    category: 'Premium',
-    image: 'https://images.unsplash.com/photo-1594631252845-29fc4cc8c663?w=600&h=800&fit=crop',
-    thumbnail: 'https://images.unsplash.com/photo-1594631252845-29fc4cc8c663?w=300&h=400&fit=crop',
-    stock: 8,
-    rating: 4.9,
-    sizes: ['Free Size']
-  },
-  {
-    id: 1002,
-    name: 'Designer Tuxedo Suit',
-    description: 'Premium Italian wool tuxedo with satin lapels',
-    price: 34999,
-    brand: 'Elite Tailors',
-    category: 'Premium',
-    image: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=600&h=800&fit=crop',
-    thumbnail: 'https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=300&h=400&fit=crop',
-    stock: 5,
-    rating: 5.0,
-    sizes: ['M', 'L', 'XL']
-  },
-  {
-    id: 1003,
-    name: 'Hand-Embroidered Lehenga',
-    description: 'Bridal lehenga with intricate hand embroidery',
-    price: 45999,
-    brand: 'Heritage Couture',
-    category: 'Premium',
-    image: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?w=600&h=800&fit=crop',
-    thumbnail: 'https://images.unsplash.com/photo-1617137968427-85924c800a22?w=300&h=400&fit=crop',
-    stock: 3,
-    rating: 4.9,
-    sizes: ['S', 'M', 'L']
-  },
-  {
-    id: 1004,
-    name: 'Cashmere Overcoat',
-    description: '100% Pure Cashmere winter overcoat',
-    price: 38999,
-    brand: 'Luxury Wraps',
-    category: 'Premium',
-    image: 'https://images.unsplash.com/photo-1551028719-001e990e9c5d?w=600&h=800&fit=crop',
-    thumbnail: 'https://images.unsplash.com/photo-1551028719-001e990e9c5d?w=300&h=400&fit=crop',
-    stock: 6,
-    rating: 4.8,
-    sizes: ['M', 'L', 'XL']
-  },
-];
-
-// Placeholder products for testing/design purposes
-const placeholderProducts: Product[] = [
-  {
-    id: 101,
-    name: 'Silk Embroidered Saree',
-    description: 'Elegant silk saree with intricate zari work and premium fabric',
-    price: 3499,
-    brand: 'Aria Luxe',
-    category: 'Aria Luxe',
-    image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=600&h=800&fit=crop',
-    thumbnail: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=300&h=400&fit=crop',
-    stock: 15,
-    rating: 4.8,
-    sizes: ['Free Size']
-  },
-  {
-    id: 102,
-    name: 'Premium Cotton Hoodie',
-    description: 'Comfortable and stylish hoodie perfect for casual wear',
-    price: 2499,
-    brand: 'Urban Threads',
-    category: 'Urban Threads',
-    image: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=600&h=800&fit=crop',
-    thumbnail: 'https://images.unsplash.com/photo-1556821840-3a63f95609a7?w=300&h=400&fit=crop',
-    stock: 20,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 103,
-    name: 'Designer Anarkali Suit',
-    description: 'Beautiful floor-length Anarkali with mirror work and embroidery',
-    price: 4299,
-    brand: 'Ethnic Elegance',
-    category: 'Ethnic Elegance',
-    image: 'https://images.unsplash.com/photo-1616469829960-18aef209d661?w=600&h=800&fit=crop',
-    thumbnail: 'https://images.unsplash.com/photo-1616469829960-18aef209d661?w=300&h=400&fit=crop',
-    stock: 12,
-    rating: 4.9,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 104,
-    name: 'Classic Denim Jacket',
-    description: 'Trendy indigo denim jacket with modern fit and style',
-    price: 2999,
-    brand: 'Street Style',
-    category: 'Street Style',
-    image: 'https://images.unsplash.com/photo-1593032465171-8f0b7a0b78cd?w=600&h=800&fit=crop',
-    stock: 18,
-    rating: 4.5,
-    sizes: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 105,
-    name: 'Handloom Cotton Kurta',
-    description: 'Traditional handloom kurta with contemporary design',
-    price: 1899,
-    brand: 'Heritage Craft',
-    category: 'Heritage Craft',
-    image: 'https://images.unsplash.com/photo-1621786860304-1b1a0a0197a1?w=600&h=800&fit=crop',
-    stock: 25,
-    rating: 4.7,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 106,
-    name: 'Floral Print Maxi Dress',
-    description: 'Elegant maxi dress with beautiful floral patterns',
-    price: 2799,
-    brand: 'Boho Chic',
-    category: 'Boho Chic',
-    image: 'https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&h=800&fit=crop',
-    stock: 14,
-    rating: 4.6,
-    sizes: ['S', 'M', 'L']
-  },
-  {
-    id: 107,
-    name: 'Wool Blend Winter Coat',
-    description: 'Warm and stylish winter coat for cold weather',
-    price: 5499,
-    brand: 'Winter Essentials',
-    category: 'Winter Essentials',
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?w=600&h=800&fit=crop',
-    stock: 10,
-    rating: 4.8,
-    sizes: ['S', 'M', 'L', 'XL']
-  },
-  {
-    id: 108,
-    name: 'Chikankari Embroidered Top',
-    description: 'Handcrafted chikankari top with delicate embroidery',
-    price: 2199,
-    brand: 'Artisan Made',
-    category: 'Artisan Made',
-    image: 'https://images.unsplash.com/photo-1617034182210-91e5336b4999?w=600&h=800&fit=crop',
-    stock: 16,
-    rating: 4.7,
-    sizes: ['S', 'M', 'L', 'XL']
-  }
-];
 
 const HomePage: React.FC = () => {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
   const [showScroll, setShowScroll] = useState(false);
-  const [, setHoveredProduct] = useState<number | null>(null);
   const [parallaxOffset, setParallaxOffset] = useState(0);
+  const [premiumProducts, setPremiumProducts] = useState<Product[]>([]);
+  const [premiumLoading, setPremiumLoading] = useState(true);
 
   const checkScrollTop = useCallback(() => {
     if (!showScroll && window.pageYOffset > 400) {
@@ -199,9 +38,7 @@ const HomePage: React.FC = () => {
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-  const [isLoading, setIsLoading] = useState(true);
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0);
-  const [visibleProducts, setVisibleProducts] = useState<Set<number>>(new Set());
 
   // Luxury clothing brand banner images
   const bannerImages = [
@@ -250,49 +87,44 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
-    const fetchFeaturedProducts = async () => {
+    const fetchPremiumProducts = async () => {
       try {
-        const response = await localProductsAPI.getAll();
-        if (response.success && response.data && response.data.products && response.data.products.length > 0) {
-          // Get first 8 products as featured
-          setFeaturedProducts(response.data.products.slice(0, 8));
+        const response = await fetch('/branded-style.json');
+        if (!response.ok) {
+          throw new Error('Failed to fetch premium collection');
+        }
+        const data = await response.json();
+        if (data?.products?.length) {
+          const normalized: Product[] = data.products.slice(0, 8).map((item: any, index: number) => {
+            const imageSource = item.image || item.images?.[0] || '/placeholder-clothing.jpg';
+            const price = Number(item.price ?? item.discounted_price ?? 0);
+            return {
+              id: item.id ?? index,
+              name: item.name ?? item.display_categories ?? 'Premium Product',
+              description: item.description ?? item.display_categories ?? 'Premium curated piece',
+              price,
+              brand: item.brand ?? 'Luxury Label',
+              category: item.category ?? item.display_categories ?? 'Premium',
+              image: imageSource,
+              thumbnail: imageSource,
+              stock: item.stock ?? 0,
+              rating: Number(item.rating) || 4.5,
+            } as Product;
+          });
+          setPremiumProducts(normalized);
         } else {
-          // Use placeholder products if API doesn't return data
-          setFeaturedProducts(placeholderProducts.slice(0, 8));
+          setPremiumProducts([]);
         }
       } catch (error) {
-        console.error('Failed to fetch featured products:', error);
-        // Use placeholder products on error
-        setFeaturedProducts(placeholderProducts.slice(0, 8));
+        console.error('Failed to load premium collection:', error);
+        setPremiumProducts([]);
       } finally {
-        setIsLoading(false);
+        setPremiumLoading(false);
       }
     };
 
-    fetchFeaturedProducts();
+    fetchPremiumProducts();
   }, []);
-
-  // Intersection Observer for scroll animations
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const productId = parseInt(entry.target.getAttribute('data-product-id') || '0');
-            setVisibleProducts((prev) => new Set([...prev, productId]));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-
-    const productCards = document.querySelectorAll('[data-product-id]');
-    productCards.forEach((card) => observer.observe(card));
-
-    return () => {
-      productCards.forEach((card) => observer.unobserve(card));
-    };
-  }, [featuredProducts]);
 
   const categories = [
     {
@@ -654,87 +486,44 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Featured Products Section - Luxury Modern Design */}
-      <section className="py-20" style={{ background: '#f3eee7' }}>
+      {/* Premium Collection Section */}
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 
-              className="text-5xl font-semibold font-heading mb-3"
-              style={{ color: '#000000', fontWeight: 600 }}
-            >
-              Featured
-            </h2>
-            <Link
-              to="/collection"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg font-medium transition-all duration-300"
-              style={{
-                background: '#000000',
-                color: '#ffffff'
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#d4af37';
-                e.currentTarget.style.color = '#000000';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#000000';
-                e.currentTarget.style.color = '#ffffff';
-              }}
-            >
-              View Full Collection
-              <ArrowRight className="h-5 w-5" />
-            </Link>
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-royalBrown mb-4">Our Premium Collection</h2>
+            <div className="w-24 h-1 bg-gold mx-auto"></div>
+            <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
+              Exquisite craftsmanship meets timeless elegance in our premium collection. Each piece is meticulously designed for those who appreciate the finer things in life.
+            </p>
           </div>
-
-          {isLoading ? (
+          
+          {premiumLoading ? (
             <div className="flex justify-center items-center py-20">
               <div className="loading-spinner"></div>
             </div>
-          ) : featuredProducts.length === 0 ? (
-            <div className="text-center py-20">
-              <p className="text-gray-600">No featured products available at the moment.</p>
+          ) : premiumProducts.length === 0 ? (
+            <div className="text-center text-gray-600 py-16">
+              Premium collection is being curated. Please check back soon.
             </div>
           ) : (
-            <div 
-              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-            >
-              {featuredProducts.map((product) => (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {premiumProducts.map((product) => (
                 <Link 
                   to={`/product/${product.id}`}
                   key={product.id}
-                  className={`product-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 ease-out block ${
-                    visibleProducts.has(product.id) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-                  }`}
-                  onMouseEnter={() => setHoveredProduct(product.id)}
-                  onMouseLeave={() => setHoveredProduct(null)}
+                  className="product-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 ease-out block"
                 >
-                  {/* Product Badge */}
-                  {product.id % 3 === 0 && <span className="product-badge">Bestseller</span>}
-                  {product.id % 5 === 0 && <span className="product-badge" style={{background: '#EF4444'}}>Sale</span>}
-                  
-                  {/* Product Image */}
                   <div className="relative overflow-hidden">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-64 object-cover transition-transform duration-500 hover:scale-105"
+                      className="w-full h-80 object-cover transition-transform duration-500 hover:scale-105"
                     />
-                    
-                    {/* Quick Actions */}
-                    <div className="product-actions absolute bottom-0 left-0 right-0 bg-white/90 p-3 flex justify-center space-x-2">
-                      <button className="p-2 rounded-full bg-white hover:bg-gray-100 text-gray-700 hover:text-gold transition-colors">
-                        <Heart className="h-5 w-5" />
-                      </button>
-                      <button className="p-2 rounded-full bg-white hover:bg-gray-100 text-gray-700 hover:text-gold transition-colors">
-                        <Eye className="h-5 w-5" />
-                      </button>
-                      <button className="p-2 rounded-full bg-royalBrown text-white hover:bg-gold transition-colors flex items-center">
-                        <ShoppingCart className="h-5 w-5 mr-1" />
-                        <span className="text-sm">Add to Cart</span>
-                      </button>
+                    <div className="absolute top-2 right-2 bg-royalBrown text-white text-xs font-semibold px-2 py-1 rounded">
+                      Premium
                     </div>
                   </div>
                   
-                  {/* Product Info */}
                   <div className="p-4">
                     <div className="flex justify-between items-start">
                       <div>
@@ -749,84 +538,11 @@ const HomePage: React.FC = () => {
                         </div>
                       </div>
                     </div>
-                    
-                    {/* Color Swatches */}
-                    <div className="mt-3 flex space-x-2">
-                      {['#000000', '#3B82F6', '#EF4444', '#F59E0B'].map((color, i) => (
-                        <button
-                          key={i}
-                          className="w-5 h-5 rounded-full border border-gray-200"
-                          style={{ backgroundColor: color }}
-                          aria-label={`Color ${i + 1}`}
-                        />
-                      ))}
-                    </div>
                   </div>
                 </Link>
               ))}
             </div>
           )}
-
-          <div className="text-center mt-16">
-            <Link 
-              to="/products" 
-              className="inline-flex items-center px-8 py-3 text-sm font-medium text-black transition-all duration-300 border-b-2 border-transparent hover:border-black"
-              style={{ letterSpacing: '0.05em' }}
-            >
-              View All Products
-              <ArrowRight className="ml-2 h-4 w-4" strokeWidth={2} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Premium Collection Section */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-royalBrown mb-4">Our Premium Collection</h2>
-            <div className="w-24 h-1 bg-gold mx-auto"></div>
-            <p className="text-gray-600 mt-4 max-w-2xl mx-auto">
-              Exquisite craftsmanship meets timeless elegance in our premium collection. Each piece is meticulously designed for those who appreciate the finer things in life.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {premiumProducts.map((product) => (
-              <Link 
-                to={`/product/${product.id}`}
-                key={product.id}
-                className="product-card bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-500 ease-out block"
-              >
-                <div className="relative overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-80 object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                  <div className="absolute top-2 right-2 bg-royalBrown text-white text-xs font-semibold px-2 py-1 rounded">
-                    Premium
-                  </div>
-                </div>
-                
-                <div className="p-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h3 className="font-medium text-gray-900">{product.name}</h3>
-                      <p className="text-sm text-gray-500">{product.brand}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-gray-900">₹{product.price.toLocaleString()}</p>
-                      <div className="flex items-center justify-end mt-1">
-                        <Star className="h-4 w-4 text-yellow-400 fill-current" />
-                        <span className="ml-1 text-sm text-gray-600">{product.rating}</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
           
           <div className="text-center mt-12">
             <Link 
